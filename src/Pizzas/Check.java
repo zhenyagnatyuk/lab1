@@ -8,7 +8,7 @@ public class Check {
     private ArrayList<Pizza> pizzas;
     private Human buyer;
     public Check() {
-        pizzas = new ArrayList<Pizza>();
+        pizzas = new ArrayList<>();
         buyer = new Human();
     }
     public Check(ArrayList<Pizza> p, Human b) {
