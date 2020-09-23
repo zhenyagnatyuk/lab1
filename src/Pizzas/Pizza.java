@@ -5,21 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Pizza extends Dish {
-    /* Enum which represents size of pizza
-    * */
-    public enum Size{
-        SMALL,
-        MEDIUM,
-        LARGE,
-        KING
-    }
-    /* Enum which represents base type of pizza
-     * */
-    public enum Base_type {
-        DOUGH,
-        PITA
-    }
-
     private String name;
     private Size size;
     private ArrayList<Product> toppings;
@@ -163,7 +148,7 @@ public class Pizza extends Dish {
      * */
     public void printPizza(){
         System.out.println("Name: " + name);
-        System.out.println("Size: " + getSize_str());
+        System.out.println("Pizzas.Size: " + getSize_str());
         for (Product product : toppings) {
             System.out.println(product.getName() + " " + product.getWeight());
         }

@@ -1,7 +1,4 @@
-import Pizzas.Pizza;
-import Pizzas.Product;
-import Pizzas.Check;
-import Pizzas.Human;
+import Pizzas.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,8 +7,8 @@ import java.util.Iterator;
 public class Main {
 
     public static void main(String[] args) {
-	    Pizza.Size s = Pizza.Size.MEDIUM;
-        Pizza.Base_type b = Pizza.Base_type.DOUGH;
+	    Size s = Size.MEDIUM;
+        Base_type b = Base_type.DOUGH;
         ArrayList<Check> checks = new ArrayList<>();
         Product p = new Product("кукуруза", 10, 10);
         Product p1 = new Product("Огурок", 20, 15);
@@ -37,8 +34,8 @@ public class Main {
         Check check = new Check(pizza_arr, h1);
         checks.add(check);
 
-        s = Pizza.Size.KING;
-        b = Pizza.Base_type.PITA;
+        s = Size.KING;
+        b = Base_type.PITA;
         Product p6 = new Product("сир", 14, 100);
         Product p7 = new Product("Помідор", 30, 15);
         Product p8 = new Product("Перець", 25, 11);
