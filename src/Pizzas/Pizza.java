@@ -1,14 +1,19 @@
 package Pizzas;
 
+import Pizzas.exceptions.MissingBaseTypeException;
+import Pizzas.exceptions.NotSuchIndexException;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Pizza extends Dish {
+public class Pizza extends Dish implements Cooking{
     private String name;
     private Size size;
     private ArrayList<Product> toppings;
     private Base base;
+    private boolean status;
+
     /* default constructor
      * */
     Pizza () {
@@ -49,6 +54,10 @@ public class Pizza extends Dish {
 
     public String getName() {
         return name;
+    }
+
+    public boolean getStatus() {
+        return status;
     }
     /* Replaces toppings with new one, also recalculates price and weight
      * */
@@ -110,9 +119,9 @@ public class Pizza extends Dish {
     }
     /* removes topping by index, also recalculates price and weight
      * */
-    public void removeTopping(int index){
+    public void removeTopping(int index) throws NotSuchIndexException {
         if(index < 0 || index > toppings.size()) {
-            throw new IllegalArgumentException("No such index");
+            throw new NotSuchIndexException("No such index");
         }
         int w = toppings.get(index).getWeight();
         BigDecimal p = toppings.get(index).getPrice();
@@ -155,6 +164,28 @@ public class Pizza extends Dish {
         System.out.println("Total weight: " + getWeight());
         System.out.println("Price: " + getPrice() + "\n");
     }
+    @Override
+    public String toString(){
+        StringBuilder pizza_string = new StringBuilder("Name: ");
+        pizza_string.append(name);
+        pizza_string.append("\n");
+        pizza_string.append("Pizzas.Size: ");
+        pizza_string.append(getSize_str());
+        pizza_string.append("\n");
+        for (Product product : toppings) {
+            pizza_string.append(product.getName());
+            pizza_string.append(" ");
+            pizza_string.append(product.getWeight());
+            pizza_string.append("\n");
+        }
+        pizza_string.append("Total weight: ");
+        pizza_string.append(getWeight());
+        pizza_string.append("\n");
+        pizza_string.append("Price: ");
+        pizza_string.append(getPrice());
+        pizza_string.append("\n");
+        return pizza_string.toString();
+    }
 
     public Size getSize() {
         return size;
@@ -175,6 +206,23 @@ public class Pizza extends Dish {
     public ArrayList<Product> getToppings() {
         return toppings;
     }
+
+    @Override
+    public void cook() {
+        if (!status){
+            System.out.println("Pizza starts baking");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Pizza has baked");
+            status = true;
+        } else {
+            System.out.println("Pizza already had baked");
+        }
+    }
+
     /* class, which represents base, has its type and weight
      * */
     public class Base{
@@ -182,16 +230,22 @@ public class Pizza extends Dish {
         int weight;
 
         Base () {
-            type = null;
+            type = Base_type.DOUGH;
             weight = 0;
         }
-        Base (Base_type t) {
+        Base (Base_type t) throws MissingBaseTypeException {
+            if (t == null){
+                throw new MissingBaseTypeException("Base type can't be null");
+            }
             type = Base_type.DOUGH;
             weight = calcWeight(t);
         }
         /* replaces base type, also recalculates weight
          * */
-        public void setType(Base_type t) {
+        public void setType(Base_type t) throws MissingBaseTypeException {
+            if (t == null){
+                throw new MissingBaseTypeException("Base type can't be null");
+            }
             type = t;
             int w = Pizza.this.getWeight() - weight;
             weight = calcWeight(t);
@@ -200,32 +254,9 @@ public class Pizza extends Dish {
         /* calculates weight based on base type and pizza size
          * */
         int calcWeight(Base_type t) {
-            if ((t ==  Base_type.DOUGH) && (Pizza.this.size == Size.SMALL)){
-                return 300;
-            } else if ((t ==  Base_type.DOUGH) && (Pizza.this.size == Size.MEDIUM)){
-                return 450;
-            } else if ((t ==  Base_type.DOUGH) && (Pizza.this.size == Size.LARGE)){
-                return 600;
-            } else if ((t ==  Base_type.DOUGH) && (Pizza.this.size == Size.KING)){
-                return 1000;
-            } else if ((t ==  Base_type.PITA) && (Pizza.this.size == Size.SMALL)){
-                return 200;
-            } else if ((t ==  Base_type.PITA) && (Pizza.this.size == Size.MEDIUM)){
-                return 300;
-            } else if ((t ==  Base_type.PITA) && (Pizza.this.size == Size.LARGE)){
-                return 500;
-            } else if ((t ==  Base_type.PITA) && (Pizza.this.size == Size.KING)){
-                return 800;
-            }
-            return 0;
+            return Pizza.this.size.get_weight() * t.get_weight();
         }
-        String type_to_str(Base_type t) {
-            switch (t) {
-                case DOUGH: return "dough";
-                case PITA: return "pita";
-            }
-            return "";
-        }
+
         public String getType_str() {
             assert type != null;
             switch (type) {
