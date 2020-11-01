@@ -27,7 +27,7 @@ public class Pizza extends Dish implements Cooking{
     public Pizza(String n, Size s, ArrayList<Product> t, Base_type b_type) {
         name = n;
         size = s;
-        toppings = t;
+        toppings = new ArrayList<Product>(t);
         base = new Base(b_type);
         BigDecimal p = new BigDecimal("0");
         int w = 0;
@@ -38,16 +38,22 @@ public class Pizza extends Dish implements Cooking{
             p = product.getPrice().add(p);
         }
         w += base.getWeight();
-        if (s == Size.KING){
-            p = new BigDecimal("100").add(p);
-        } else if(s == Size.LARGE){
-            p = new BigDecimal("50").add(p);
-        } else if(s == Size.MEDIUM) {
-            p = new BigDecimal("30").add(p);
-        }
+        p = new BigDecimal(get_price_by_size(s)).add(p);
         setPrice(p);
         setWeight(w);
     }
+
+    public static int get_price_by_size(Size s){
+        if (s == Size.KING){
+           return 100;
+        } else if(s == Size.LARGE){
+            return 50;
+        } else if(s == Size.MEDIUM) {
+            return 30;
+        } else
+            return 0;
+    }
+
     public void setName(String n) {
         name = n;
     }
@@ -62,8 +68,8 @@ public class Pizza extends Dish implements Cooking{
     /* Replaces toppings with new one, also recalculates price and weight
      * */
     public void setToppings(ArrayList<Product> t) {
-        this.toppings = t;
-        int w = 0;
+        this.toppings = new ArrayList<Product>(t);
+        int w = base.getWeight();
         BigDecimal p = new BigDecimal("0");
         Iterator i = t.iterator();
         while (i.hasNext()) {
@@ -77,7 +83,7 @@ public class Pizza extends Dish implements Cooking{
     /* adds more than one toppings, also recalculates price and weight
      * */
     public void addToppings(ArrayList<Product> t) {
-        this.toppings.addAll(t);
+        this.toppings.addAll(new ArrayList<Product>(t));
         int w = getWeight();
         BigDecimal p = getPrice();
         Iterator i = t.iterator();
@@ -140,9 +146,10 @@ public class Pizza extends Dish implements Cooking{
         } else if(size == Size.MEDIUM) {
             p = new BigDecimal("-30").add(p);
         }
+        int prev_w = base.calcWeight(base.type);
         this.size = s;
         int w = base.calcWeight(base.type);
-        setWeight(getWeight() - w);
+        setWeight(getWeight() - prev_w + w);
         base.weight = w;
         if (s == Size.KING){
             p = new BigDecimal("100").add(p);
@@ -157,7 +164,7 @@ public class Pizza extends Dish implements Cooking{
      * */
     public void printPizza(){
         System.out.println("Name: " + name);
-        System.out.println("Pizzas.Size: " + getSize_str());
+        System.out.println("Pizzas.Size: " + size.toString());
         for (Product product : toppings) {
             System.out.println(product.getName() + " " + product.getWeight());
         }
@@ -170,7 +177,7 @@ public class Pizza extends Dish implements Cooking{
         pizza_string.append(name);
         pizza_string.append("\n");
         pizza_string.append("Pizzas.Size: ");
-        pizza_string.append(getSize_str());
+        pizza_string.append(size.toString());
         pizza_string.append("\n");
         for (Product product : toppings) {
             pizza_string.append(product.getName());
@@ -189,16 +196,6 @@ public class Pizza extends Dish implements Cooking{
 
     public Size getSize() {
         return size;
-    }
-    public String getSize_str() {
-        assert size != null;
-        switch (size) {
-            case SMALL: return "small";
-            case MEDIUM: return "medium";
-            case LARGE: return "large";
-            case KING: return "king";
-        }
-        return "";
     }
     public Base getBase() {
         return base;
@@ -237,7 +234,7 @@ public class Pizza extends Dish implements Cooking{
             if (t == null){
                 throw new MissingBaseTypeException("Base type can't be null");
             }
-            type = Base_type.DOUGH;
+            type = t;
             weight = calcWeight(t);
         }
         /* replaces base type, also recalculates weight
@@ -253,23 +250,15 @@ public class Pizza extends Dish implements Cooking{
         }
         /* calculates weight based on base type and pizza size
          * */
-        int calcWeight(Base_type t) {
+        public int calcWeight(Base_type t) {
             return Pizza.this.size.get_weight() * t.get_weight();
         }
 
-        public String getType_str() {
-            assert type != null;
-            switch (type) {
-                case DOUGH: return "dough";
-                case PITA: return "pita";
-            }
-            return "";
-        }
         public Base_type getType(){
             return type;
         }
 
-        int getWeight() {
+        public int getWeight() {
             return weight;
         }
     }

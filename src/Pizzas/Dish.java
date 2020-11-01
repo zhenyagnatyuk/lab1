@@ -11,10 +11,6 @@ abstract class Dish {
         weight = 0;
     }
 
-    public Dish(BigDecimal p, int w){
-        price = p;
-        weight = w;
-    }
 
     protected void setPrice(BigDecimal price) {
         this.price = price;
