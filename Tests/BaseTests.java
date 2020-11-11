@@ -1,4 +1,3 @@
-package Tests;
 
 import Pizzas.Base_type;
 import Pizzas.Pizza;

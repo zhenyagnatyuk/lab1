@@ -1,11 +1,7 @@
-package Tests;
-
 import Pizzas.*;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
 
 class CheckTest {
 

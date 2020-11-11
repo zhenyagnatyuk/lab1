@@ -1,5 +1,3 @@
-package Tests;
-
 import Pizzas.Size;
 import org.junit.jupiter.api.Test;
 
