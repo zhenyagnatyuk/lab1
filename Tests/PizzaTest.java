@@ -1,18 +1,26 @@
 
-
 import Pizzas.Base_type;
 import Pizzas.Pizza;
 import Pizzas.Product;
 import Pizzas.Size;
+import Pizzas.exceptions.MissingBaseTypeException;
 import Pizzas.exceptions.NotSuchIndexException;
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.stubbing.OngoingStubbing;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class PizzaTest {
+
     private ArrayList<Product> prods,prods2;
     private Size s;
     private Base_type b;
@@ -158,5 +166,38 @@ class PizzaTest {
         assertEquals(136, pizza1.getPrice().intValue());
         assertEquals(1535, pizza1.getWeight());
     }
+
+    @Test
+    public void Integrated_addTopping() {
+        Pizza obj = Mockito.mock(Pizza.class);
+        Product p = new Product();
+        ArrayList<Object> prods = new ArrayList<>();
+        doAnswer(invocation -> {
+            Object arg0 = invocation.getArgument(0);
+            assertNotNull(arg0);
+            return null;
+        }).when(obj).addTopping(any(Product.class));
+        obj.addTopping(p);
+
+        Mockito.verify(obj, times(1)).addTopping(p);
+    }
+    @Test
+    void Integrated_Toppingbyindex() throws NotSuchIndexException {
+        Pizza obj = Mockito.mock(Pizza.class);
+        doThrow(new NotSuchIndexException("No such index")).when(obj).removeTopping(any(Integer.class));
+        assertThrows(NotSuchIndexException.class, () -> {
+                        obj.removeTopping(0);
+                    });
+    }
+    @Test
+    void Integrated_SetBase() throws MissingBaseTypeException {
+        Pizza.Base base = Mockito.mock(Pizza.Base.class);
+        doThrow(new MissingBaseTypeException("No such type")).when(base).setType(null);
+
+        assertThrows(MissingBaseTypeException.class, () -> {
+            base.setType(null);
+        });
+    }
+
 
 }

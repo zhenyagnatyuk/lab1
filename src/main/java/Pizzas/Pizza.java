@@ -16,7 +16,7 @@ public class Pizza extends Dish implements Cooking{
 
     /* default constructor
      * */
-    Pizza () {
+    public Pizza () {
         name = "";
         size = null;
         toppings = null;
