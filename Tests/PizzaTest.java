@@ -184,10 +184,11 @@ class PizzaTest {
     @Test
     void Integrated_Toppingbyindex() throws NotSuchIndexException {
         Pizza obj = Mockito.mock(Pizza.class);
-        doThrow(new NotSuchIndexException("No such index")).when(obj).removeTopping(any(Integer.class));
+        doThrow(new NotSuchIndexException("No such index")).when(obj).removeTopping(anyInt());
         assertThrows(NotSuchIndexException.class, () -> {
                         obj.removeTopping(0);
                     });
+        Mockito.verify(obj, times(1)).removeTopping(0);
     }
     @Test
     void Integrated_SetBase() throws MissingBaseTypeException {
@@ -198,6 +199,15 @@ class PizzaTest {
             base.setType(null);
         });
     }
+    @Test
+    void Integrated_setToppings() {
+        Pizza obj = Mockito.mock(Pizza.class);
+        obj.setToppings(prods2);
+        doReturn(prods2).when(obj).getToppings();
+        ArrayList<Product> top = obj.getToppings();
+        assertArrayEquals(prods2.toArray(), top.toArray());
+    }
+
 
 
 }
