@@ -48,13 +48,13 @@ class PizzaTest {
     }
 
     @Test
-    public void testConstructorWithParams() {
+    public void Constructor_CertainPriceAndWeight_CreationOfObjectWithParams() {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         assertEquals(36, pizza1.getPrice().intValue());
         assertEquals(335, pizza1.getWeight());
     }
     @Test
-    void setToppings() {
+    void setToppings_CertainPriceAndWeightAndArray_SettingArrayOfProducts() {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         pizza1.setToppings(prods2);
         assertArrayEquals(prods2.toArray(), pizza1.getToppings().toArray());
@@ -63,7 +63,7 @@ class PizzaTest {
     }
 
     @Test
-    void addToppings() {
+    void addToppings_CertainPriceAndWeightAndArray_AddingArrayOfProductsToToppings() {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         ArrayList<Product> all_prods= new ArrayList<>();
         all_prods.addAll(prods);
@@ -75,7 +75,7 @@ class PizzaTest {
     }
 
     @Test
-    void addTopping() {
+    void addTopping_CertainPriceAndWeightAndArray_AddingSingleProductToToppings() {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         Product p3 = new Product("Кабачкова ікра", 100, 50);
         pizza1.addTopping(p3);
@@ -88,7 +88,7 @@ class PizzaTest {
     }
 
     @Test
-    void removeToppingbyname() {
+    void removeTopping_CertainPriceAndWeightAndArray_RemovingToppingByName() {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         pizza1.removeTopping("кукуруза");
         assertEquals(2, pizza1.getToppings().size());
@@ -97,19 +97,23 @@ class PizzaTest {
     }
 
     @Test
-    void removeToppingbyindex() throws NotSuchIndexException {
+    void removeTopping_CertainPriceAndWeightAndArraySize_RemovingToppingByIndex() throws NotSuchIndexException {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         pizza1.removeTopping(0);
         assertEquals(2, pizza1.getToppings().size());
         assertEquals(26, pizza1.getPrice().intValue());
         assertEquals(325, pizza1.getWeight());
+    }
+    @Test
+    void Should_ThrowNotSuchIndexException_When_IndexOfToppingNotExists () throws NotSuchIndexException {
+        Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         assertThrows(NotSuchIndexException.class, () -> {
             pizza1.removeTopping(100);
         });
     }
 
     @Test
-    void cook() {
+    void Should_Fail_When_CookingStatusIsIncorrect() {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         assertFalse(pizza1.getStatus());
         pizza1.cook();
@@ -117,7 +121,7 @@ class PizzaTest {
     }
 
     @Test
-    void get_price_by_size() {
+    void get_price_by_size_CertainPrice_OnSpecifiedSize() {
         assertEquals(0, Pizza.get_price_by_size(Size.SMALL));
         assertEquals(30, Pizza.get_price_by_size(Size.MEDIUM));
         assertEquals(50, Pizza.get_price_by_size(Size.LARGE));
@@ -125,7 +129,7 @@ class PizzaTest {
     }
 
     @Test
-    void testToString() {
+    void ToString_CertainString_GetStringRepresentationOfPizza() {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         StringBuilder pizza_string = new StringBuilder("Name: ");
         pizza_string.append("шось");
@@ -149,7 +153,7 @@ class PizzaTest {
     }
 
     @Test
-    void SetSize() {
+    void SetSize_CertainPriceAndWeight_SettingSpecifiedSize() {
         Pizza pizza1 = new Pizza("шось", Size.KING, prods, b);
         assertEquals(136, pizza1.getPrice().intValue());
         assertEquals(1535, pizza1.getWeight());

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 class CheckTest {
 
     @Test
-    void testToString() {
+    void ToString_CertainString_GetStringRepresentationOfCheck() {
         Size s = Size.MEDIUM;
         Base_type b = Base_type.DOUGH;
         Product p = new Product("кукуруза", 10, 10);

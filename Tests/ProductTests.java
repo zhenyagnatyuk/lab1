@@ -14,14 +14,22 @@ class ProductTests {
     }
 
     @org.junit.jupiter.api.Test
-    void testEquals() {
-        assertTrue(prod1.equals(prod2));
+    void Should_Fail_WhenProductsEquals() {
         assertFalse(prod3.equals(prod4));
     }
 
     @org.junit.jupiter.api.Test
-    void testHashCode() {
+    void Should_Fail_WhenProductsNotEquals() {
         assertTrue(prod1.equals(prod2));
-        assertFalse(prod3.equals(prod4));
+    }
+
+    @org.junit.jupiter.api.Test
+    void Should_Fail_WhenHashCodesAreNotEquals() {
+        assertEquals(prod1.hashCode(), prod2.hashCode());
+    }
+
+    @org.junit.jupiter.api.Test
+    void Should_Fail_WhenHashCodesAreEquals() {
+        assertNotEquals(prod3.hashCode(), prod4.hashCode());
     }
 }
