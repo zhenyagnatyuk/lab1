@@ -19,7 +19,7 @@ public class Pizza extends Dish implements Cooking{
     public Pizza () {
         name = "";
         size = null;
-        toppings = null;
+        toppings = new ArrayList<>();
         base = new Base();
     }
     /* initialization constructor in which calculates total price of pizza and total weight

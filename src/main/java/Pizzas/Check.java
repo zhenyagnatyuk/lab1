@@ -8,6 +8,7 @@ public class Check {
     private ArrayList<Pizza> pizzas;
     private Human buyer;
     private StringBuilder check;
+    private BigDecimal total_price;
     public Check() {
         pizzas = new ArrayList<>();
         buyer = new Human();
@@ -26,10 +27,23 @@ public class Check {
             check.append(pizza.toString());
             price = pizza.getPrice().add(price);
         }
+        total_price = price;
         check.append("Total price: ");
         check.append(price);
         check.append("\n");
 
+    }
+
+    public ArrayList<Pizza> getPizzas() {
+        return pizzas;
+    }
+
+    public Human getBuyer() {
+        return buyer;
+    }
+
+    public BigDecimal getTotal_price(){
+        return total_price;
     }
 
     @Override

@@ -1,3 +1,5 @@
+package Unit_tests;
+
 import Pizzas.Base_type;
 import org.junit.jupiter.api.Test;
 

@@ -7,7 +7,7 @@ abstract class Dish {
     private int weight;
 
     Dish(){
-        price = new BigDecimal("0");
+        price = new BigDecimal(0);
         weight = 0;
     }
 
