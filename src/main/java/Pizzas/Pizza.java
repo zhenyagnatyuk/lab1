@@ -58,23 +58,24 @@ public class Pizza extends Dish implements Cooking{
                 .orElse(0);
     }
 
-    public List getMarkedProductThatHaveWeightBiggerThanValue(int value){
+    public Map<String, String> getMarkedProductThatHaveWeightBiggerThanValue(int value){
         return  Stream.concat(
-                toppings
+                    toppings
                     .stream()
                     .filter(p -> p.getWeight() >= value)
-                    .collect(Collectors.toList())
-                    .stream()
-                    .map((p) -> "Вага більше " + Integer.toString(value) + ": " + p.getName())
-                    .collect(Collectors.toList()).stream(),
-                toppings
+                    .collect(Collectors.toMap(Product::getName, string -> { return "Підходить"; }))
+                    .entrySet()
+                    .stream(),
+                    toppings
                     .stream()
                     .filter(p -> p.getWeight() < value)
-                    .collect(Collectors.toList())
+                    .collect(Collectors.toMap(Product::getName, string -> { return "Не підходить"; }))
+                    .entrySet()
                     .stream()
-                    .map((p) -> "Вага менше " + Integer.toString(value) + ": " + p.getName())
-                    .collect(Collectors.toList()).stream()
-                ).collect(Collectors.toList());
+                ).collect(Collectors.toMap(
+                    Map.Entry::getKey, // The key
+                    Map.Entry::getValue // The value
+                ));
     }
 
     public static int get_price_by_size(Size s){

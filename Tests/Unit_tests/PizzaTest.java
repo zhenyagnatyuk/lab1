@@ -11,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -186,10 +188,10 @@ class PizzaTest {
     @Test
     void getMarkedProductThatHaveWeightBiggerThanValue_CertainString_EqualsString(){
         Pizza pizza1 = new Pizza("шось", Size.KING, prods, b);
-        ArrayList<String> res = new ArrayList<>();
-        res.add("Вага більше 10: кукуруза");
-        res.add("Вага більше 10: Огурок");
-        res.add("Вага менше 10: Квашена капуста");
+        Map<String, String> res = new HashMap<String, String>();
+        res.put("кукуруза", "Підходить");
+        res.put("Квашена капуста", "Не підходить");
+        res.put("Огурок", "Підходить");
         assertEquals(res, pizza1.getMarkedProductThatHaveWeightBiggerThanValue(10));
     }
 
