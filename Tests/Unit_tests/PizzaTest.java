@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class PizzaTest {
@@ -193,6 +192,16 @@ class PizzaTest {
         res.put("Квашена капуста", "Не підходить");
         res.put("Огурок", "Підходить");
         assertEquals(res, pizza1.getMarkedProductThatHaveWeightBiggerThanValue(10));
+    }
+
+    @Test
+    void getAllWeights_ArrayOfWeights_EqualsArrays(){
+        Pizza pizza1 = new Pizza("шось", Size.KING, prods, b);
+        ArrayList<Integer> weights = new ArrayList<>();
+        weights.add(10);
+        weights.add(20);
+        weights.add(5);
+        assertEquals(weights, pizza1.getAllWeights());
     }
 
 

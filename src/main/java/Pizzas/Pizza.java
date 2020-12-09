@@ -44,6 +44,13 @@ public class Pizza extends Dish implements Cooking{
         setWeight(w);
     }
 
+    public List getAllWeights(){
+        return  toppings
+                .stream()
+                .map(Product::getWeight)
+                .collect(Collectors.toList());
+    }
+
     public Product getTheMostExpensiveProduct(){
         return  toppings.stream()
                 .max(Comparator.comparing(Product::getPrice))
