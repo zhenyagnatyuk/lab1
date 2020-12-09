@@ -3,6 +3,9 @@ package Pizzas;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Check {
     private ArrayList<Pizza> pizzas;
@@ -44,6 +47,27 @@ public class Check {
 
     public BigDecimal getTotal_price(){
         return total_price;
+    }
+
+    public int getTotalWeightOfProductsInPizzas(){
+        return pizzas.stream()
+                .flatMap(Pizza -> Pizza.getToppings().stream())
+                .collect(Collectors.toList()).stream()
+                .reduce(0, (totalWeight, prod) -> totalWeight + prod.getWeight(), Integer::sum);
+    }
+
+    public String getMostCommonProductInPizzas(){
+        return pizzas.stream()
+                .flatMap(Pizza -> Pizza.getToppings().stream())
+                .collect(Collectors.toList()).stream().map(Product::getName)
+                .collect(Collectors.groupingBy(w -> w, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .max(Comparator.comparing(Map.Entry::getValue))
+                .get()
+                .getKey()
+                .describeConstable()
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override

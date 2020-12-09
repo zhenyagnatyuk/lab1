@@ -4,8 +4,9 @@ import Pizzas.exceptions.MissingBaseTypeException;
 import Pizzas.exceptions.NotSuchIndexException;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Pizza extends Dish implements Cooking{
     private String name;
@@ -41,6 +42,39 @@ public class Pizza extends Dish implements Cooking{
         p = new BigDecimal(get_price_by_size(s)).add(p);
         setPrice(p);
         setWeight(w);
+    }
+
+    public Product getTheMostExpensiveProduct(){
+        return  toppings.stream()
+                .max(Comparator.comparing(Product::getPrice))
+                .orElseThrow(RuntimeException::new);
+    }
+
+    public double getMeanWeightOfToppings(){
+        return  toppings
+                .stream()
+                .mapToDouble(Product::getWeight)
+                .average()
+                .orElse(0);
+    }
+
+    public List getMarkedProductThatHaveWeightBiggerThanValue(int value){
+        return  Stream.concat(
+                toppings
+                    .stream()
+                    .filter(p -> p.getWeight() >= value)
+                    .collect(Collectors.toList())
+                    .stream()
+                    .map((p) -> "Вага більше " + Integer.toString(value) + ": " + p.getName())
+                    .collect(Collectors.toList()).stream(),
+                toppings
+                    .stream()
+                    .filter(p -> p.getWeight() < value)
+                    .collect(Collectors.toList())
+                    .stream()
+                    .map((p) -> "Вага менше " + Integer.toString(value) + ": " + p.getName())
+                    .collect(Collectors.toList()).stream()
+                ).collect(Collectors.toList());
     }
 
     public static int get_price_by_size(Size s){
