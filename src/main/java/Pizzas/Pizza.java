@@ -65,24 +65,20 @@ public class Pizza extends Dish implements Cooking{
                 .orElse(0);
     }
 
-    public Map<String, String> getMarkedProductThatHaveWeightBiggerThanValue(int value){
-        return  Stream.concat(
-                    toppings
-                    .stream()
-                    .filter(p -> p.getWeight() >= value)
-                    .collect(Collectors.toMap(Product::getName, string -> { return "Підходить"; }))
-                    .entrySet()
-                    .stream(),
-                    toppings
-                    .stream()
-                    .filter(p -> p.getWeight() < value)
-                    .collect(Collectors.toMap(Product::getName, string -> { return "Не підходить"; }))
-                    .entrySet()
-                    .stream()
-                ).collect(Collectors.toMap(
-                    Map.Entry::getKey, // The key
-                    Map.Entry::getValue // The value
-                ));
+    public Map<String, List<Product>> getMarkedProductThatHaveWeightBiggerThanValue(int value){
+        Map<String, List<Product>> map = new HashMap<>();
+        List<Product> neededToppings = toppings
+                .stream()
+                .filter(e -> e.getWeight() >= value)
+                .collect(Collectors.toList());
+        map.put("Більше " + Integer.toString(value) + ": ", neededToppings);
+        List<Product> notNeededToppings = toppings
+                .stream()
+                .filter(e -> e.getWeight() < value)
+                .collect(Collectors.toList());
+        map.put("Менше " + Integer.toString(value) + ": ", notNeededToppings);
+        map.forEach((k, v) -> System.out.println(k + ": " + v));
+        return map;
     }
 
     public static int get_price_by_size(Size s){

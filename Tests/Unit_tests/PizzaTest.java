@@ -185,12 +185,16 @@ class PizzaTest {
     }
 
     @Test
-    void getMarkedProductThatHaveWeightBiggerThanValue_CertainString_EqualsString(){
+    void getMarkedProductThatHaveWeightBiggerThanValue_CertainMap_EqualsMaps(){
         Pizza pizza1 = new Pizza("шось", Size.KING, prods, b);
-        Map<String, String> res = new HashMap<String, String>();
-        res.put("кукуруза", "Підходить");
-        res.put("Квашена капуста", "Не підходить");
-        res.put("Огурок", "Підходить");
+        HashMap<String, List<Product>> res = new HashMap<>();
+        Product p = new Product("кукуруза", 10, 10);
+        Product p1 = new Product("Огурок", 20, 15);
+        Product p2 = new Product("Квашена капуста", 5, 11);
+        List<Product> listTrue = List.of(p,p1);
+        List<Product> listFalse = List.of(p2);
+        res.put("Більше 10: ", listTrue);
+        res.put("Менше 10: ", listFalse);
         assertEquals(res, pizza1.getMarkedProductThatHaveWeightBiggerThanValue(10));
     }
 
