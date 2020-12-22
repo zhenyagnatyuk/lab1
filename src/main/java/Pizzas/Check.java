@@ -34,9 +34,14 @@ public class Check {
 
     }
 
+    public void setBuyer(Human b) {
+        this.buyer = b;
+    }
+
     public ArrayList<Pizza> getPizzas() {
         return pizzas;
     }
+
 
     public Human getBuyer() {
         return buyer;

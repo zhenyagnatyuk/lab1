@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Base_typeTests {
+class Base_typeTest {
 
     @Test
     void get_weight_CertainWeight_OnSpecifiedBaseType() {

@@ -4,7 +4,7 @@ import Pizzas.Product;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductTests {
+class ProductTest {
     private Product prod1, prod2, prod3, prod4;
     @org.junit.jupiter.api.BeforeEach
     void setUp() {

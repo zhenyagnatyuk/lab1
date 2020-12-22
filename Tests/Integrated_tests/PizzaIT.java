@@ -14,15 +14,13 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class IntegratedPizzaTests {
+public class PizzaIT {
     Product p;
     ArrayList<Product> prods;
     @BeforeEach
     void setUp() {
         prods = new ArrayList<>();
         p = Mockito.mock(Product.class);
-        p.setWeight(10);
-        p.setPrice(new BigDecimal(100));
         Mockito.when(p.getWeight()).thenReturn(10);
         Mockito.when(p.getPrice()).thenReturn(new BigDecimal(100));
     }

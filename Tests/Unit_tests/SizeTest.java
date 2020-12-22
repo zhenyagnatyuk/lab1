@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SizeTests {
+class SizeTest {
 
     @Test
     void get_weight_CertainWeight_OnSpecifiedSize() {

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class BaseTests {
+class BaseTest {
     private ArrayList<Product> prods;
     private Base_type b;
     Pizza pizza1;
