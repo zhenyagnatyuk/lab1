@@ -4,8 +4,9 @@ import Pizzas.exceptions.MissingBaseTypeException;
 import Pizzas.exceptions.NotSuchIndexException;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Pizza extends Dish implements Cooking{
     private String name;
@@ -41,6 +42,43 @@ public class Pizza extends Dish implements Cooking{
         p = new BigDecimal(get_price_by_size(s)).add(p);
         setPrice(p);
         setWeight(w);
+    }
+
+    public List getAllWeights(){
+        return  toppings
+                .stream()
+                .map(Product::getWeight)
+                .collect(Collectors.toList());
+    }
+
+    public Product getTheMostExpensiveProduct(){
+        return  toppings.stream()
+                .max(Comparator.comparing(Product::getPrice))
+                .orElseThrow(RuntimeException::new);
+    }
+
+    public double getMeanWeightOfToppings(){
+        return  toppings
+                .stream()
+                .mapToDouble(Product::getWeight)
+                .average()
+                .orElse(0);
+    }
+
+    public Map<String, List<Product>> getMarkedProductThatHaveWeightBiggerThanValue(int value){
+        Map<String, List<Product>> map = new HashMap<>();
+        List<Product> neededToppings = toppings
+                .stream()
+                .filter(e -> e.getWeight() >= value)
+                .collect(Collectors.toList());
+        map.put("Більше " + Integer.toString(value) + ": ", neededToppings);
+        List<Product> notNeededToppings = toppings
+                .stream()
+                .filter(e -> e.getWeight() < value)
+                .collect(Collectors.toList());
+        map.put("Менше " + Integer.toString(value) + ": ", notNeededToppings);
+        map.forEach((k, v) -> System.out.println(k + ": " + v));
+        return map;
     }
 
     public static int get_price_by_size(Size s){

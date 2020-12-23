@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class PizzaTest {
@@ -169,46 +171,42 @@ class PizzaTest {
     }
 
     @Test
-    public void Integrated_addTopping() {
-        Pizza obj = Mockito.mock(Pizza.class);
-        Product p = new Product();
-        ArrayList<Object> prods = new ArrayList<>();
-        doAnswer(invocation -> {
-            Object arg0 = invocation.getArgument(0);
-            assertNotNull(arg0);
-            return null;
-        }).when(obj).addTopping(any(Product.class));
-        obj.addTopping(p);
-
-        Mockito.verify(obj, times(1)).addTopping(p);
-    }
-    @Test
-    void Integrated_Toppingbyindex() throws NotSuchIndexException {
-        Pizza obj = Mockito.mock(Pizza.class);
-        doThrow(new NotSuchIndexException("No such index")).when(obj).removeTopping(anyInt());
-        assertThrows(NotSuchIndexException.class, () -> {
-                        obj.removeTopping(0);
-                    });
-        Mockito.verify(obj, times(1)).removeTopping(0);
-    }
-    @Test
-    void Integrated_SetBase() throws MissingBaseTypeException {
-        Pizza.Base base = Mockito.mock(Pizza.Base.class);
-        doThrow(new MissingBaseTypeException("No such type")).when(base).setType(null);
-
-        assertThrows(MissingBaseTypeException.class, () -> {
-            base.setType(null);
-        });
-    }
-    @Test
-    void Integrated_setToppings() {
-        Pizza obj = Mockito.mock(Pizza.class);
-        obj.setToppings(prods2);
-        doReturn(prods2).when(obj).getToppings();
-        ArrayList<Product> top = obj.getToppings();
-        assertArrayEquals(prods2.toArray(), top.toArray());
+    void getTheMostExpensiveProduct_CertainProduct_SpecifyingProduct(){
+        Pizza pizza1 = new Pizza("шось", Size.KING, prods, b);
+        Product testedProd = pizza1.getTheMostExpensiveProduct();
+        Product p1 = new Product("Огурок", 20, 15);
+        assertEquals(testedProd, p1);
     }
 
+    @Test
+    void getMeanWeightOfToppings_MeanWeight_EqualsMeanWeight(){
+        Pizza pizza1 = new Pizza("шось", Size.KING, prods, b);
+        assertEquals(35.0/3, pizza1.getMeanWeightOfToppings());
+    }
+
+    @Test
+    void getMarkedProductThatHaveWeightBiggerThanValue_CertainMap_EqualsMaps(){
+        Pizza pizza1 = new Pizza("шось", Size.KING, prods, b);
+        HashMap<String, List<Product>> res = new HashMap<>();
+        Product p = new Product("кукуруза", 10, 10);
+        Product p1 = new Product("Огурок", 20, 15);
+        Product p2 = new Product("Квашена капуста", 5, 11);
+        List<Product> listTrue = List.of(p,p1);
+        List<Product> listFalse = List.of(p2);
+        res.put("Більше 10: ", listTrue);
+        res.put("Менше 10: ", listFalse);
+        assertEquals(res, pizza1.getMarkedProductThatHaveWeightBiggerThanValue(10));
+    }
+
+    @Test
+    void getAllWeights_ArrayOfWeights_EqualsArrays(){
+        Pizza pizza1 = new Pizza("шось", Size.KING, prods, b);
+        ArrayList<Integer> weights = new ArrayList<>();
+        weights.add(10);
+        weights.add(20);
+        weights.add(5);
+        assertEquals(weights, pizza1.getAllWeights());
+    }
 
 
 }
