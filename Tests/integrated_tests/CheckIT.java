@@ -1,5 +1,5 @@
-package Integrated_tests;
-import Pizzas.*;
+package integrated_tests;
+import pizzas.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

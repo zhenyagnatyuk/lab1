@@ -1,4 +1,4 @@
-package Pizzas;
+package pizzas;
 
 import java.math.BigDecimal;
 

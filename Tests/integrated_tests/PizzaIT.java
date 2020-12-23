@@ -1,9 +1,9 @@
-package Integrated_tests;
+package integrated_tests;
 
-import Pizzas.Base_type;
-import Pizzas.Pizza;
-import Pizzas.Product;
-import Pizzas.Size;
+import pizzas.Base_type;
+import pizzas.Pizza;
+import pizzas.Product;
+import pizzas.Size;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

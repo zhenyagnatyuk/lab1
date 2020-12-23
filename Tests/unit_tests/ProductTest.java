@@ -1,6 +1,6 @@
-package Unit_tests;
+package unit_tests;
 
-import Pizzas.Product;
+import pizzas.Product;
 
 import static org.junit.jupiter.api.Assertions.*;
 

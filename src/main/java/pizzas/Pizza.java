@@ -1,19 +1,22 @@
-package Pizzas;
+package pizzas;
 
-import Pizzas.exceptions.MissingBaseTypeException;
-import Pizzas.exceptions.NotSuchIndexException;
+import pizzas.exceptions.MissingBaseTypeException;
+import pizzas.exceptions.NotSuchIndexException;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class Pizza extends Dish implements Cooking{
     private String name;
     private Size size;
     private ArrayList<Product> toppings;
-    private Base base;
+    private final Base base;
     private boolean status;
+    private static final Logger logger = LogManager.getLogger(Pizza.class);
 
     /* default constructor
      * */
@@ -28,13 +31,11 @@ public class Pizza extends Dish implements Cooking{
     public Pizza(String n, Size s, ArrayList<Product> t, Base_type b_type) {
         name = n;
         size = s;
-        toppings = new ArrayList<Product>(t);
+        toppings = new ArrayList<>(t);
         base = new Base(b_type);
         BigDecimal p = new BigDecimal("0");
         int w = 0;
-        Iterator i = t.iterator();
-        while (i.hasNext()) {
-            Product product = (Product) i.next();
+        for (Product product : t) {
             w += product.getWeight();
             p = product.getPrice().add(p);
         }
@@ -71,13 +72,13 @@ public class Pizza extends Dish implements Cooking{
                 .stream()
                 .filter(e -> e.getWeight() >= value)
                 .collect(Collectors.toList());
-        map.put("Більше " + Integer.toString(value) + ": ", neededToppings);
+        map.put("Більше " + value + ": ", neededToppings);
         List<Product> notNeededToppings = toppings
                 .stream()
                 .filter(e -> e.getWeight() < value)
                 .collect(Collectors.toList());
-        map.put("Менше " + Integer.toString(value) + ": ", notNeededToppings);
-        map.forEach((k, v) -> System.out.println(k + ": " + v));
+        map.put("Менше " + value + ": ", notNeededToppings);
+        map.forEach((k, v) -> logger.trace(k + ": " + v));
         return map;
     }
 
@@ -106,12 +107,10 @@ public class Pizza extends Dish implements Cooking{
     /* Replaces toppings with new one, also recalculates price and weight
      * */
     public void setToppings(ArrayList<Product> t) {
-        this.toppings = new ArrayList<Product>(t);
+        this.toppings = new ArrayList<>(t);
         int w = base.getWeight();
         BigDecimal p = new BigDecimal("0");
-        Iterator i = t.iterator();
-        while (i.hasNext()) {
-            Product product = (Product) i.next();
+        for (Product product : t) {
             w += product.getWeight();
             p = product.getPrice().add(p);
         }
@@ -121,12 +120,10 @@ public class Pizza extends Dish implements Cooking{
     /* adds more than one toppings, also recalculates price and weight
      * */
     public void addToppings(ArrayList<Product> t) {
-        this.toppings.addAll(new ArrayList<Product>(t));
+        this.toppings.addAll(new ArrayList<>(t));
         int w = getWeight();
         BigDecimal p = getPrice();
-        Iterator i = t.iterator();
-        while (i.hasNext()) {
-            Product product = (Product) i.next();
+        for (Product product : t) {
             w += product.getWeight();
             p = product.getPrice().add(p);
         }
@@ -201,13 +198,13 @@ public class Pizza extends Dish implements Cooking{
     /* Prints pizza to check
      * */
     public void printPizza(){
-        System.out.println("Name: " + name);
-        System.out.println("Pizzas.Size: " + size.toString());
+        logger.trace("Name: " + name);
+        logger.trace("Pizzas.Size: " + size.toString());
         for (Product product : toppings) {
-            System.out.println(product.getName() + " " + product.getWeight());
+            logger.trace(product.getName() + " " + product.getWeight());
         }
-        System.out.println("Total weight: " + getWeight());
-        System.out.println("Price: " + getPrice() + "\n");
+        logger.trace("Total weight: " + getWeight());
+        logger.trace("Price: " + getPrice() + "\n");
     }
     @Override
     public String toString(){
@@ -245,16 +242,16 @@ public class Pizza extends Dish implements Cooking{
     @Override
     public void cook() {
         if (!status){
-            System.out.println("Pizza starts baking");
+            logger.trace("Pizza starts baking");
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Pizza has baked");
+            logger.trace("Pizza has baked");
             status = true;
         } else {
-            System.out.println("Pizza already had baked");
+            logger.error("Pizza already had baked");
         }
     }
 

@@ -1,16 +1,15 @@
-package Pizzas;
+package pizzas;
 
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Check {
-    private ArrayList<Pizza> pizzas;
+    private final ArrayList<Pizza> pizzas;
     private Human buyer;
-    private StringBuilder check;
+    private final StringBuilder check;
     private BigDecimal total_price;
     public Check() {
         pizzas = new ArrayList<>();
@@ -68,7 +67,7 @@ public class Check {
                 .collect(Collectors.groupingBy(w -> w, Collectors.counting()))
                 .entrySet()
                 .stream()
-                .max(Comparator.comparing(Map.Entry::getValue))
+                .max(Map.Entry.comparingByValue())
                 .get()
                 .getKey()
                 .describeConstable()

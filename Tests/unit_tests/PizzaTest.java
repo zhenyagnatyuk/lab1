@@ -1,31 +1,26 @@
-package Unit_tests;
+package unit_tests;
 
-import Pizzas.Base_type;
-import Pizzas.Pizza;
-import Pizzas.Product;
-import Pizzas.Size;
-import Pizzas.exceptions.MissingBaseTypeException;
-import Pizzas.exceptions.NotSuchIndexException;
+import pizzas.Base_type;
+import pizzas.Pizza;
+import pizzas.Product;
+import pizzas.Size;
+import pizzas.exceptions.NotSuchIndexException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class PizzaTest {
 
     private ArrayList<Product> prods,prods2;
-    private Size s;
     private Base_type b;
     @BeforeEach
     void setUp() {
-        s = Size.MEDIUM;
+        Size s = Size.MEDIUM;
         b = Base_type.DOUGH;
         Product p = new Product("кукуруза", 10, 10);
         Product p1 = new Product("Огурок", 20, 15);
@@ -78,8 +73,7 @@ class PizzaTest {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
         Product p3 = new Product("Кабачкова ікра", 100, 50);
         pizza1.addTopping(p3);
-        ArrayList<Product> all_prods= new ArrayList<>();
-        all_prods.addAll(prods);
+        ArrayList<Product> all_prods = new ArrayList<>(prods);
         all_prods.add(p3);
         assertArrayEquals(all_prods.toArray(), pizza1.getToppings().toArray());
         assertEquals(86, pizza1.getPrice().intValue());
@@ -106,9 +100,7 @@ class PizzaTest {
     @Test
     void Should_ThrowNotSuchIndexException_When_IndexOfToppingNotExists () throws NotSuchIndexException {
         Pizza pizza1 = new Pizza("шось", Size.SMALL, prods, b);
-        assertThrows(NotSuchIndexException.class, () -> {
-            pizza1.removeTopping(100);
-        });
+        assertThrows(NotSuchIndexException.class, () -> pizza1.removeTopping(100));
     }
 
     @Test

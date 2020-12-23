@@ -1,4 +1,4 @@
-package Pizzas;
+package pizzas;
 
 /* Enum which represents base type of pizza
  * */

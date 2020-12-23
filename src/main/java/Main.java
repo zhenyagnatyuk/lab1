@@ -1,19 +1,23 @@
 
-import Pizzas.*;
-import Pizzas.exceptions.MissingBaseTypeException;
-import Pizzas.exceptions.NotSuchIndexException;
+import pizzas.*;
+import pizzas.exceptions.MissingBaseTypeException;
+import pizzas.exceptions.NotSuchIndexException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 public class Main {
+
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
 	    Size s = Size.MEDIUM;
         Base_type b = Base_type.DOUGH;
         //enum toString method
-        System.out.println(b.toString());
+        logger.trace(b.toString());
 
         ArrayList<Check> checks = new ArrayList<>();
         Product p = new Product("кукуруза", 10, 10);
@@ -68,7 +72,7 @@ public class Main {
         try {
             pizza2.removeTopping(0);
         } catch (NotSuchIndexException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         pizza2.removeTopping("Салямі");
         pizza_arr.add(pizza1);
@@ -77,49 +81,49 @@ public class Main {
         check = new Check(pizza_arr, h1);
         checks.add(check);
 
-        Iterator i = checks.iterator();
-        while (i.hasNext()) {
-            check = (Check) i.next();
-            System.out.println(check.toString()+ "\n");
+        for (Check value : checks) {
+            check = value;
+            logger.trace(check.toString());
         }
         //String task
-        System.out.println("String task");
-        System.out.println(pizza1.toString().split(String.valueOf('\n'))[0] +
-                "\nready: " + pizza1.getStatus()+ "\n");
+        logger.trace("String task");
+        final String[] split_strings = pizza1.toString().split(String.valueOf('\n'));
+        logger.trace(split_strings[0] +
+                "ready: " + pizza1.getStatus());
         pizza1.cook();
-        System.out.println(pizza1.toString().split(String.valueOf('\n'))[0] +
-                "\nready: " + pizza1.getStatus()+ "\n\n\n\n");
+        logger.trace(split_strings[0] +
+                "ready: " + pizza1.getStatus());
 
         //checking exception
-        System.out.println("Exception task");
+        logger.trace("Exception task");
         try {
             pizza2.removeTopping(100);
         } catch (NotSuchIndexException e) {
-            System.out.println(e.getMessage()+ "\n");
+            logger.error(e.getMessage());
         }
         try {
             pizza2.getBase().setType(Base_type.PITA);
         } catch (MissingBaseTypeException e) {
-            System.out.println(e.getMessage()+ "\n");
+            logger.error(e.getMessage());
         }
         try {
             pizza2.getBase().setType(null);
         } catch (MissingBaseTypeException e) {
-            System.out.println(e.getMessage() + "\n\n\n\n");
+            logger.error(e.getMessage());
         }
 
         //equals and hashCode task
-        System.out.println("Equals and hashCode task");
+        logger.trace("Equals and hashCode task");
         Human human1 = new Human("Василь","Петренко");
         Human human2 = new Human("Василь","Петренко");
         // false because equals now checking the links
-        System.out.println(human1.equals(human2));
-        System.out.println((human1.hashCode() == human2.hashCode()) + "\n");
+        logger.trace(human1.equals(human2));
+        logger.trace((human1.hashCode() == human2.hashCode()));
 
         Product prod1 = new Product("кукуруза", 10, 10);
         Product prod2 = new Product("кукуруза", 10, 10);
-        System.out.println(prod1.equals(prod2));
-        System.out.println((prod1.hashCode() == prod2.hashCode()) + "\n");
+        logger.trace(prod1.equals(prod2));
+        logger.trace((prod1.hashCode() == prod2.hashCode()));
 
 
     }

@@ -1,10 +1,10 @@
-package Unit_tests;
+package unit_tests;
 
-import Pizzas.Base_type;
-import Pizzas.Pizza;
-import Pizzas.Product;
-import Pizzas.Size;
-import Pizzas.exceptions.MissingBaseTypeException;
+import pizzas.Base_type;
+import pizzas.Pizza;
+import pizzas.Product;
+import pizzas.Size;
+import pizzas.exceptions.MissingBaseTypeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,9 +32,7 @@ class BaseTest {
 
     @Test
     public void Should_ThrowMissingBaseTypeException_When_BaseTypeIsNull() throws MissingBaseTypeException {
-        assertThrows(MissingBaseTypeException.class, () -> {
-            new Pizza("шось", Size.SMALL, prods, null);
-        });
+        assertThrows(MissingBaseTypeException.class, () -> new Pizza("шось", Size.SMALL, prods, null));
 
     }
     @Test
@@ -51,9 +49,7 @@ class BaseTest {
 
     @Test
     public void Should_ThrowMissingBaseTypeException_When_SetTypeToNull() throws MissingBaseTypeException {
-        assertThrows(MissingBaseTypeException.class, () -> {
-            pizza1.getBase().setType(null);
-        });
+        assertThrows(MissingBaseTypeException.class, () -> pizza1.getBase().setType(null));
     }
     @Test
     public void setType_CertainBaseType_SettingSpecifiedBaseType() throws MissingBaseTypeException {

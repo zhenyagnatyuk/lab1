@@ -1,6 +1,6 @@
-package Unit_tests;
+package unit_tests;
 
-import Pizzas.*;
+import pizzas.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,11 +12,6 @@ class CheckTest {
     private Size s;
     private Base_type b;
     private Product p;
-    private Product p1;
-    private Product p2;
-    private Product p3;
-    private Product p4;
-    private Product p5;
     private ArrayList<Product> prods;
     private ArrayList<Product> prods2;
     private ArrayList<Pizza> pizza_arr;
@@ -26,11 +21,11 @@ class CheckTest {
         s = Size.MEDIUM;
         b = Base_type.DOUGH;
         p = new Product("кукуруза", 10, 10);
-        p1 = new Product("Огурок", 20, 15);
-        p2 = new Product("Квашена капуста", 5, 11);
-        p3 = new Product("Кабачкова ікра", 100, 50);
-        p4 = new Product("Оселедець", 100, 50);
-        p5 = new Product("Невідома штука", 100, 50);
+        Product p1 = new Product("Огурок", 20, 15);
+        Product p2 = new Product("Квашена капуста", 5, 11);
+        Product p3 = new Product("Кабачкова ікра", 100, 50);
+        Product p4 = new Product("Оселедець", 100, 50);
+        Product p5 = new Product("Невідома штука", 100, 50);
         //creating pizza
         prods = new ArrayList<>();
         prods2 = new ArrayList<>();

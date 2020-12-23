@@ -1,4 +1,4 @@
-package Pizzas;
+package pizzas;
 
 public class Human {
     private String name;

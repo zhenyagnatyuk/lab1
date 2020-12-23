@@ -1,0 +1,8 @@
+﻿2020-12-23T11:50:13.057 TRACE Pizza starts baking
+2020-12-23T11:50:13.563 TRACE Pizza has baked
+2020-12-23T11:50:13.588 TRACE Більше 10: : [pizzas.Product@5b94d4b9, pizzas.Product@577aa34a]
+2020-12-23T11:50:13.589 TRACE Менше 10: : [pizzas.Product@4c67ec5c]
+2020-12-23T11:51:36.877 TRACE Pizza starts baking
+2020-12-23T11:51:37.383 TRACE Pizza has baked
+2020-12-23T11:51:37.405 TRACE Більше 10: : [pizzas.Product@5b94d4b9, pizzas.Product@577aa34a]
+2020-12-23T11:51:37.405 TRACE Менше 10: : [pizzas.Product@4c67ec5c]
